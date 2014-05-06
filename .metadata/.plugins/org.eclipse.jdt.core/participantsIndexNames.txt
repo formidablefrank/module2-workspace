@@ -1,3 +1,5 @@
 INDEX VERSION 1.126
+/home/training/Desktop/module2-workspace/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3014942545.index
+/hello-world-web/src
 /home/training/Desktop/module2-workspace/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/2731095336.index
 /hello-world.web/src
