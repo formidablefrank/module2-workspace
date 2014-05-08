@@ -1,4 +1,4 @@
-package com.example.login;
+package com.example.home;
 
 import java.io.IOException;
 
@@ -9,15 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Auth
+ * Servlet implementation class AdminHome
  */
-public class Auth extends HttpServlet {
+public class AdminHome extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Auth() {
+    public AdminHome() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,16 +33,8 @@ public class Auth extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("username").equals("asd") && request.getParameter("password").equals("asd")){
-			request.getSession(true);
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/Home");
-			rd.forward(request, response);
-		}
-		else{
-			request.setAttribute("msg", "Access denied!");
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/Login");
-			rd.forward(request, response);
-		}
+		RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/AdminHome.jsp");
+		rd.forward(request, response);
 	}
 
 }

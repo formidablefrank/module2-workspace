@@ -11,8 +11,10 @@
 	<h1>welcome ${username}!</h1>
 	<p> 
 		The chipmunks are:
-		<c:forEach items="${chipmunks}" var="chipmunk">
-			<br>${chipmunk}
+		<c:forEach items="${chipmunks}" var="chipmunk" varStatus="i">
+			<c:if test='${!chipmunk.equals("Simon")}'>
+				<br>${i.count} ${chipmunk}
+			</c:if>
 		</c:forEach>
 	</p>
 </body>

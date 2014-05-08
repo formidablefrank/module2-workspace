@@ -1,23 +1,25 @@
 package com.example.login;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class Auth
+ * Servlet implementation class ProcessLogin
  */
-public class Auth extends HttpServlet {
+public class ProcessLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Auth() {
+    public ProcessLogin() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,9 +35,20 @@ public class Auth extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("username").equals("asd") && request.getParameter("password").equals("asd")){
+		request.setAttribute("username", request.getParameter("username"));
+		request.setAttribute("date", new Date());
+		if(request.getParameter("username").equals("admin") && request.getParameter("password").equals("admin")){
 			request.getSession(true);
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/Home");
+			HttpSession hs = request.getSession();
+			hs.setAttribute("type", "admin");
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/AdminHome");
+			rd.forward(request, response);
+		}
+		else if(request.getParameter("username").equals("cust") && request.getParameter("password").equals("cust")){
+			request.getSession(true);
+			HttpSession hs = request.getSession();
+			hs.setAttribute("type", "cust");
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/CustHome");
 			rd.forward(request, response);
 		}
 		else{

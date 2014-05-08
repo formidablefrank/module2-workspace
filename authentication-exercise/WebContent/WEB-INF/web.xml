@@ -39,4 +39,18 @@
     <servlet-name>Home</servlet-name>
     <url-pattern>/Home</url-pattern>
   </servlet-mapping>
+  <filter>
+    <display-name>Filter</display-name>
+    <filter-name>Filter</filter-name>
+    <filter-class>com.example.home.Filter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>Filter</filter-name>
+    <url-pattern>/Home</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+  </filter-mapping>
+  <listener>
+    <listener-class>com.example.login.AuthListener</listener-class>
+  </listener>
 </web-app>
