@@ -7,7 +7,7 @@
 <title>Cust Home</title>
 </head>
 <body>
-	<h2>Welcome ${username}!</h2>
+	<h2>Welcome ${sessionScope.username}!</h2>
 	<p>
 		Today is ${date}.<br>
 		<a href="LogOut">Log Out</a>
