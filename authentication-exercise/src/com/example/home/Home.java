@@ -1,4 +1,4 @@
-package com.example.login;
+package com.example.home;
 
 import java.io.IOException;
 
@@ -9,15 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Auth
+ * Servlet implementation class Home
  */
-public class Auth extends HttpServlet {
+public class Home extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Auth() {
+    public Home() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,15 +33,11 @@ public class Auth extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("username").equals(request.getParameter("password"))){
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/Home");
-			rd.forward(request, response);
-		}
-		else{
-			request.setAttribute("msg", "Access denied!");
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/Login");
-			rd.forward(request, response);
-		}
+		request.setAttribute("username", request.getParameter("username"));
+		request.setAttribute("chipmunks", new String[]{"Alvin", "Simon", "Theodore"});
+		RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/Home.jsp");
+		rd.forward(request, response);
+		
 	}
 
 }
