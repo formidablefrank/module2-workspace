@@ -1,12 +1,17 @@
 package com.example.login;
 
 import java.io.IOException;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.example.model.User;
+import com.example.service.UserService;
+import com.example.service.UserServiceImpl;
 
 /**
  * Servlet implementation class ProcessLogin
@@ -33,20 +38,25 @@ public class ProcessLogin extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("username").equals("admin") && request.getParameter("password").equals("admin")){
+		UserService service = new UserServiceImpl();
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		User tempUser = new User(username, password);
+		
+		if(username.equals("admin") && service.findUserByUsername(username).equals(tempUser)){
 			request.getSession(true);
 			HttpSession hs = request.getSession();
 			hs.setAttribute("type", "admin");
-			hs.setAttribute("username", request.getParameter("username"));
+			hs.setAttribute("username", username);
 			//RequestDispatcher rd = getServletContext().getRequestDispatcher("/AdminHome");
 			//rd.forward(request, response);
 			response.sendRedirect("AdminHome");
 		}
-		else if(request.getParameter("username").equals("cust") && request.getParameter("password").equals("cust")){
+		else if(username.equals("cust") && service.findUserByUsername(username).equals(tempUser)){
 			request.getSession(true);
 			HttpSession hs = request.getSession();
 			hs.setAttribute("type", "cust");
-			hs.setAttribute("username", request.getParameter("username"));
+			hs.setAttribute("username", username);
 			//RequestDispatcher rd = getServletContext().getRequestDispatcher("/CustHome");
 			//rd.forward(request, response);
 			response.sendRedirect("CustHome");
