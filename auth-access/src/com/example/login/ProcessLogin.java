@@ -1,6 +1,7 @@
 package com.example.login;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -42,8 +43,18 @@ public class ProcessLogin extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		User tempUser = new User(username, password);
+		User realUser = null;
+		try {
+			realUser = service.findUserByUsername(username);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		if(username.equals("admin") && service.findUserByUsername(username).equals(tempUser)){
+		if(username.equals("admin") && tempUser.equals(realUser)){
 			request.getSession(true);
 			HttpSession hs = request.getSession();
 			hs.setAttribute("type", "admin");
@@ -52,7 +63,7 @@ public class ProcessLogin extends HttpServlet {
 			//rd.forward(request, response);
 			response.sendRedirect("AdminHome");
 		}
-		else if(username.equals("cust") && service.findUserByUsername(username).equals(tempUser)){
+		else if(username.equals("cust") && tempUser.equals(realUser)){
 			request.getSession(true);
 			HttpSession hs = request.getSession();
 			hs.setAttribute("type", "cust");
