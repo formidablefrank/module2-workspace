@@ -56,13 +56,13 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>LogOut</display-name>
-    <servlet-name>LogOut</servlet-name>
-    <servlet-class>com.example.login.LogOut</servlet-class>
+    <display-name>Logout</display-name>
+    <servlet-name>Logout</servlet-name>
+    <servlet-class>com.example.login.Logout</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>LogOut</servlet-name>
-    <url-pattern>/LogOut</url-pattern>
+    <servlet-name>Logout</servlet-name>
+    <url-pattern>/Logout</url-pattern>
   </servlet-mapping>
   <filter>
     <display-name>AdminHomeFilter</display-name>

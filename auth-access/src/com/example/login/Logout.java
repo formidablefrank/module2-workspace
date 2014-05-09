@@ -2,7 +2,6 @@ package com.example.login;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,13 +11,13 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class LogOut
  */
-public class LogOut extends HttpServlet {
+public class Logout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LogOut() {
+    public Logout() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,8 +29,7 @@ public class LogOut extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession hs = request.getSession();
 		hs.invalidate();
-		RequestDispatcher rd = getServletContext().getRequestDispatcher("/Login");
-		rd.forward(request, response);
+		response.sendRedirect("Login");
 	}
 
 	/**

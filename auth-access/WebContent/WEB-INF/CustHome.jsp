@@ -10,7 +10,7 @@
 	<h2>Welcome ${sessionScope.username}!</h2>
 	<p>
 		Today is ${date}.<br>
-		<a href="LogOut">Log Out</a>
+		<a href="Logout">Log Out</a>
 	</p>
 </body>
 </html>

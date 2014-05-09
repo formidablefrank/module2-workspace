@@ -1,8 +1,6 @@
 package com.example.login;
 
 import java.io.IOException;
-import java.util.Date;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -35,22 +33,23 @@ public class ProcessLogin extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("date", new Date());
 		if(request.getParameter("username").equals("admin") && request.getParameter("password").equals("admin")){
 			request.getSession(true);
 			HttpSession hs = request.getSession();
 			hs.setAttribute("type", "admin");
 			hs.setAttribute("username", request.getParameter("username"));
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/AdminHome");
-			rd.forward(request, response);
+			//RequestDispatcher rd = getServletContext().getRequestDispatcher("/AdminHome");
+			//rd.forward(request, response);
+			response.sendRedirect("AdminHome");
 		}
 		else if(request.getParameter("username").equals("cust") && request.getParameter("password").equals("cust")){
 			request.getSession(true);
 			HttpSession hs = request.getSession();
 			hs.setAttribute("type", "cust");
 			hs.setAttribute("username", request.getParameter("username"));
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/CustHome");
-			rd.forward(request, response);
+			//RequestDispatcher rd = getServletContext().getRequestDispatcher("/CustHome");
+			//rd.forward(request, response);
+			response.sendRedirect("CustHome");
 		}
 		else{
 			request.setAttribute("msg", "Access denied!");

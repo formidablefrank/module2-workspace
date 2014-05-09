@@ -43,6 +43,7 @@ public class CustHomeFilter implements Filter {
 		if(!userType.equals("cust")){
 			HttpServletResponse hsr = (HttpServletResponse) response;
 			hsr.sendRedirect("");
+			return;
 		}
 		// pass the request along the filter chain
 		chain.doFilter(request, response);
