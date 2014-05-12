@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.example.dao.UserDaoException;
 import com.example.model.User;
 import com.example.service.UserService;
 import com.example.service.UserServiceImpl;
@@ -50,6 +51,9 @@ public class ProcessLogin extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UserDaoException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

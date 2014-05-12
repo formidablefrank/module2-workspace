@@ -22,6 +22,9 @@ public class UserDaoSqlImplTest {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (UserDaoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
