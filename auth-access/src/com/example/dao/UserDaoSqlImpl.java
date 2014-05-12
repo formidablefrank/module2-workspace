@@ -25,6 +25,8 @@ public class UserDaoSqlImpl implements UserDao {
 		String password = "";
 		*/
 		
+		//ConnectionManager is user to replace DriverManager
+		
 		Connection con = ConnectionManager.getInstance().getConnection();
 		
 		PreparedStatement stmt = con.prepareStatement("SELECT username, password from user WHERE username = ? ;");
