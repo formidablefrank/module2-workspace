@@ -36,6 +36,7 @@ public class DBUnitDemoTest extends DBTestCase {
 	public void test() throws Exception {
 		assertEquals(2, getDataSet().getTable("user").getRowCount());
 		ITable dataset = getDataSet().getTable("user");
+		//^ Outputs an ITable specifically the "user" table that can be found in our "standard" snapshot 
 		Assertion.assertEquals(dataset, dataset);
 	}
 	
@@ -43,12 +44,16 @@ public class DBUnitDemoTest extends DBTestCase {
 	public void testdb() throws Exception {
 		//Fetch database data after executing your code
 		IDataSet databaseDataSet = getConnection().createDataSet();
+		//^ represents the database as it now appears
 		ITable actualTable = databaseDataSet.getTable("user");
+		//^ Extract the current ITable that represents the "user" table
 		
 		//Load expected data from an XML dataset
 		IDataSet expectedDataSet = new FlatXmlDataSetBuilder()
 			.build(new File("resources/data-snapshot-1.xml"));
 		ITable expectedTable = expectedDataSet.getTable("user");
+		//^ Creates an IDataSet from an arbitrary xml file, not necessarily the "standard" snapshot.
+		// Again we get just one of the tables using the second line.
 		
 		//Insert actual database table match expected table
 		Assertion.assertEquals(expectedTable, actualTable);
@@ -61,15 +66,23 @@ public class DBUnitDemoTest extends DBTestCase {
 		// omit primary key column for query to query snapshot comparison
 		ITable queriedTable = getConnection()
 				.createQueryTable("something", "select password from user where username='admin'");
-		
+		//^ Here we make a query on the actual database to form an ITable
+		// We can query just a part of the table.
 		IDataSet expectedDataSet = new FlatXmlDataSetBuilder()
 			.build(new File("resources/query-table-result.xml"));
 		ITable expectedTable = expectedDataSet.getTable("user");
-		
+		//^ Creates an IDataSet from an arbitrary xml file, not necessarily the "standard" snapshot.
+		// Again we get just one of the tables using the second line.
 		Assertion.assertEquals(expectedTable, queriedTable);
 	}
 
 	@Override
+	/*
+	 * Outputs an IDataSet that represents the contents of the "standard" snapshot.
+	 * This is the snapshot we want loaded before every test.
+	 * The database will be written with this image.
+	 * @see org.dbunit.DatabaseTestCase#getDataSet()
+	 */
 	protected IDataSet getDataSet() throws Exception {
 		return new FlatXmlDataSetBuilder()
 			.build(new FileInputStream("resources/data-snapshot-1.xml"));

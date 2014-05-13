@@ -1,0 +1,11 @@
+package com.example.dao.cart;
+
+import java.sql.SQLException;
+
+import com.example.dao.DaoException;
+import com.example.model.Cart;
+
+public interface CartDao {
+	Cart getCart(String username) throws SQLException, DaoException;
+	void addToCart(String username, String productname, int quantity) throws SQLException, DaoException;
+}

@@ -13,17 +13,20 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="Back to" key="selection"/>
+		<item value="DaoException" key="selection"/>
 		<list key="findhistory">
+			<item value="UserDaoException"/>
+			<item value="DataAccessException"/>
 			<item value="back to"/>
 			<item value="onepage-scroll.js"/>
 			<item value="tilted-phone.png"/>
 			<item value="phones.png"/>
 			<item value="phones.jpg"/>
 			<item value="onepage-scroll"/>
-			<item value="back-phone"/>
 		</list>
 		<list key="replacehistory">
+			<item value="DaoException"/>
+			<item value="UserDaoException"/>
 		</list>
 	</section>
 </section>
