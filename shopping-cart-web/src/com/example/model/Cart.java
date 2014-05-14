@@ -6,7 +6,6 @@ import java.util.Map;
 public class Cart {
 	private Map<Product, Integer> list;
 	private String user;
-	private String status;
 	private BigDecimal amount;
 	
 	public Map<Product, Integer> getList() {
@@ -21,18 +20,11 @@ public class Cart {
 	public void setUser(String user) {
 		this.user = user;
 	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((list == null) ? 0 : list.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
@@ -50,11 +42,6 @@ public class Cart {
 				return false;
 		} else if (!list.equals(other.list))
 			return false;
-		if (status == null) {
-			if (other.status != null)
-				return false;
-		} else if (!status.equals(other.status))
-			return false;
 		if (user == null) {
 			if (other.user != null)
 				return false;
@@ -64,14 +51,13 @@ public class Cart {
 	}
 	@Override
 	public String toString() {
-		return "Cart [" + list + ", " + user + ", " + status + "]";
+		return "Cart [" + list + ", " + user + ", " + "]";
 	}
 	
-	public Cart(Map<Product, Integer> list, String user, String status, BigDecimal amount) {
+	public Cart(Map<Product, Integer> list, String user, BigDecimal amount) {
 		super();
 		this.list = list;
 		this.user = user;
-		this.status = status;
 		this.amount = amount;
 	}
 	
