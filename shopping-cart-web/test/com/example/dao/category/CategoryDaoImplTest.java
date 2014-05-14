@@ -1,4 +1,4 @@
-package com.example.dao.inventory;
+package com.example.dao.category;
 
 //import static org.junit.Assert.*;
 
@@ -8,11 +8,11 @@ import org.junit.Test;
 
 import com.example.dao.DaoException;
 
-public class InventoryDaoTest {
+public class CategoryDaoImplTest {
 
 	@Test
 	public void testAddCategory() throws DaoException, SQLException {
-		
+		new CategoryDaoImpl().addCategory("CategoryE");
 	}
 
 }

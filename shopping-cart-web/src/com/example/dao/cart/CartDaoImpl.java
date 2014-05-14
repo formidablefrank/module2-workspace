@@ -50,16 +50,20 @@ public class CartDaoImpl implements CartDao {
 		con.close();
 		return cart;
 	}
+	
+	private ResultSet getOrderedProductDetail(String username, String productname) throws DaoException, SQLException{
+		Connection con = ConnectionManager.getInstance().getConnection();
+		PreparedStatement stmt = con.prepareStatement("SELECT * FROM tbl_order NATURAL JOIN tbl_order_detail NATURAL JOIN tbl_user NATURAL JOIN tbl_product WHERE fld_product_name = ? AND fld_username = ?;");
+		stmt.setString(1, productname);
+		stmt.setString(2, username);
+		return stmt.executeQuery();
+	}
 
 	@Override
 	public void addToCart(String username, String productname, int quantity)
 			throws SQLException, DaoException {
 		Connection con = ConnectionManager.getInstance().getConnection();
-		
-		PreparedStatement stmt = con.prepareStatement("SELECT * FROM tbl_order NATURAL JOIN tbl_order_detail NATURAL JOIN tbl_user NATURAL JOIN tbl_product WHERE fld_product_name = ? AND fld_username = ?;");
-		stmt.setString(1, productname);
-		stmt.setString(2, username);
-		ResultSet rs = stmt.executeQuery();
+		ResultSet rs = getOrderedProductDetail(username, productname);
 		
 		int keyUser = userDao.getKeyUser(username);
 		
@@ -70,7 +74,6 @@ public class CartDaoImpl implements CartDao {
 			stmt2.setInt(2, keyOrderDetail);
 			int rs2 = stmt2.executeUpdate();
 			System.out.println(rs2 + " Cart updated");
-			stmt.close();
 			stmt2.close();
 		}
 		else{
@@ -97,8 +100,14 @@ public class CartDaoImpl implements CartDao {
 			System.out.println(rs3 + " Insert new to cart");
 			stmt3.close();
 		}
+		rs.close();
+		con.close();
+		updateOrder(username);
 		
-		//update order amount
+	}
+	
+	private void updateOrder(String username) throws SQLException, DaoException {
+		Connection con = ConnectionManager.getInstance().getConnection();
 		PreparedStatement stmt8 = con.prepareStatement("SELECT key_order, key_user, SUM(fld_quantity * fld_unit_price) AS total FROM tbl_order NATURAL JOIN tbl_order_detail NATURAL JOIN tbl_product NATURAL JOIN tbl_user WHERE fld_username = ?");
 		stmt8.setString(1, username);
 		ResultSet rs8 = stmt8.executeQuery();
@@ -108,9 +117,11 @@ public class CartDaoImpl implements CartDao {
 		}
 		stmt8.close();
 		
+		if(amount == null) amount = new BigDecimal("0.00");
+		
 		PreparedStatement stmt9 = con.prepareStatement("UPDATE tbl_order SET fld_amount = ? WHERE key_user = ?;");
 		stmt9.setBigDecimal(1, amount);
-		stmt9.setInt(2, keyUser);
+		stmt9.setInt(2, userDao.getKeyUser(username));
 		int rs9 = stmt9.executeUpdate();
 		System.out.println(rs9 + " Amount updated");
 		stmt9.close();
@@ -151,16 +162,33 @@ public class CartDaoImpl implements CartDao {
 	}
 
 	@Override
-	public void removeFromCart(String username) throws SQLException,
-			DaoException {
-		// TODO Auto-generated method stub
-		
+	public void clearCart(String username) throws SQLException, DaoException {
+		Connection con = ConnectionManager.getInstance().getConnection();
+		PreparedStatement stmt2 = con.prepareStatement("DELETE FROM tbl_order_detail WHERE key_order = ?");
+		stmt2.setInt(1, getKeyOrder(username));
+		int rs2 = stmt2.executeUpdate();
+		System.out.println(rs2 + " Clear cart");
+		stmt2.close();
+		con.close();
+		updateOrder(username);
 	}
 
 	@Override
-	public void clearCart(String username) throws SQLException, DaoException {
-		// TODO Auto-generated method stub
+	public void removeFromCart(String username, String productname, int quantity)
+			throws SQLException, DaoException {
+		ResultSet rs = getOrderedProductDetail(username, productname);
 		
+		while(rs.next()){
+			int keyOrderDetail = rs.getInt("key_order_detail");
+			Connection con = ConnectionManager.getInstance().getConnection();
+			PreparedStatement stmt2 = con.prepareStatement("UPDATE tbl_order_detail SET fld_quantity = fld_quantity - ? WHERE key_order_detail = ?;");
+			stmt2.setInt(1, quantity);
+			stmt2.setInt(2, keyOrderDetail);
+			int rs2 = stmt2.executeUpdate();
+			System.out.println(rs2 + " Removed from cart");
+			stmt2.close();
+		}
+		rs.close();
 	}
 
 }

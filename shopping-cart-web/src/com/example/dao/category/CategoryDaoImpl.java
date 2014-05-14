@@ -40,5 +40,14 @@ public class CategoryDaoImpl implements CategoryDao {
 		
 		return category;
 	}
-
+	@Override
+	public void addCategory(String name) throws DaoException, SQLException {
+		Connection con = ConnectionManager.getInstance().getConnection();
+		PreparedStatement stm = con.prepareStatement("INSERT INTO tbl_category (fld_category_name) VALUES (?);");
+		stm.setString(1, name);
+		int rset = stm.executeUpdate();
+		System.out.println(rset + " Category added");
+		stm.close();
+		con.close();
+	}
 }
