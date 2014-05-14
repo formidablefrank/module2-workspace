@@ -7,4 +7,5 @@ import com.example.model.User;
 
 public interface UserDao {
 	User getUser(String name) throws DaoException, SQLException;
+	int getKeyUser(String name) throws DaoException, SQLException;
 }

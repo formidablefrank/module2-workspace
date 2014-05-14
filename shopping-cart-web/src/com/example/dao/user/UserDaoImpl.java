@@ -34,4 +34,18 @@ public class UserDaoImpl implements UserDao {
 		return user;
 	}
 
+	@Override
+	public int getKeyUser(String name) throws DaoException, SQLException {
+		Connection con = ConnectionManager.getInstance().getConnection();
+		PreparedStatement stmt7 = con.prepareStatement("SELECT key_user FROM tbl_user WHERE fld_username = ?;");
+		stmt7.setString(1, name);
+		ResultSet rs7 = stmt7.executeQuery();
+		int keyUser = 0;
+		if(rs7.next())
+			keyUser = rs7.getInt("key_user");
+		stmt7.close();
+		con.close();
+		return keyUser;
+	}
+
 }

@@ -7,4 +7,6 @@ import com.example.model.Inventory;
 
 public interface InventoryDao {
 	Inventory getInventory() throws DaoException, SQLException;
+	void decreaseSupply(String productname, int quantity) throws DaoException, SQLException;
+	void addCategory(String name) throws DaoException, SQLException;
 }

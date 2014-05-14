@@ -10,13 +10,24 @@ import java.util.Map;
 
 import com.example.dao.ConnectionManager;
 import com.example.dao.DaoException;
+import com.example.dao.inventory.InventoryDao;
+import com.example.dao.inventory.InventoryDaoImpl;
+import com.example.dao.product.ProductDao;
+import com.example.dao.product.ProductDaoImpl;
+import com.example.dao.user.UserDao;
+import com.example.dao.user.UserDaoImpl;
 import com.example.model.Cart;
 import com.example.model.Product;
 
 public class CartDaoImpl implements CartDao {
+	private InventoryDao inventoryDao;
+	private UserDao userDao;
+	private ProductDao productDao;
 
 	public CartDaoImpl() {
-		
+		inventoryDao = new InventoryDaoImpl();
+		userDao = new UserDaoImpl();
+		productDao = new ProductDaoImpl();
 	}
 
 	@Override
@@ -47,23 +58,96 @@ public class CartDaoImpl implements CartDao {
 		
 		PreparedStatement stmt = con.prepareStatement("SELECT * FROM tbl_order NATURAL JOIN tbl_order_detail NATURAL JOIN tbl_user NATURAL JOIN tbl_product WHERE fld_product_name = ? AND fld_username = ?;");
 		stmt.setString(1, productname);
-		stmt.setString(1, username);
+		stmt.setString(2, username);
 		ResultSet rs = stmt.executeQuery();
 		
-		while(rs.next()){
+		int keyUser = userDao.getKeyUser(username);
+		
+		if(rs.next()){
 			int keyOrderDetail = rs.getInt("key_order_detail");
-			PreparedStatement stmt2 = con.prepareStatement("UPDATE tbl_oder_detail SET fld_quantity = fld_quantity + 2 WHERE key_order_detail = ?;");
-			stmt2.setInt(1, keyOrderDetail);
+			PreparedStatement stmt2 = con.prepareStatement("UPDATE tbl_order_detail SET fld_quantity = fld_quantity + ? WHERE key_order_detail = ?;");
+			stmt2.setInt(1, quantity);
+			stmt2.setInt(2, keyOrderDetail);
 			int rs2 = stmt2.executeUpdate();
-			System.out.println(rs2);
-			return;
+			System.out.println(rs2 + " Cart updated");
+			stmt.close();
+			stmt2.close();
+		}
+		else{
+			//get keyOrder from that user
+			int keyOrder = getKeyOrder(username);
+			if(keyOrder == 0){
+				PreparedStatement stmt6 = con.prepareStatement("INSERT INTO tbl_order (key_user, fld_amount) VALUES (?, 0);");
+				stmt6.setInt(1, keyUser);
+				int rs6 = stmt6.executeUpdate();
+				System.out.println(rs6 + " New user shops");
+				stmt6.close();
+			}
+			keyOrder = getKeyOrder(username);
+			
+			//get keyProduct from that product
+			int keyProduct = productDao.getKeyProduct(productname);
+			
+			//insert to orderDetail
+			PreparedStatement stmt3 = con.prepareStatement("INSERT INTO tbl_order_detail (key_order, key_product, fld_quantity) VALUES (?, ?, ?);");
+			stmt3.setInt(1, keyOrder);
+			stmt3.setInt(2, keyProduct);
+			stmt3.setInt(3, quantity);
+			int rs3 = stmt3.executeUpdate();
+			System.out.println(rs3 + " Insert new to cart");
+			stmt3.close();
 		}
 		
-		PreparedStatement stmt3 = con.prepareStatement("INSERT INTO");
-		stmt3.setString(1, productname);
-		stmt3.setString(1, username);
-		ResultSet rs3 = stmt.executeQuery();
+		//update order amount
+		PreparedStatement stmt8 = con.prepareStatement("SELECT key_order, key_user, SUM(fld_quantity * fld_unit_price) AS total FROM tbl_order NATURAL JOIN tbl_order_detail NATURAL JOIN tbl_product NATURAL JOIN tbl_user WHERE fld_username = ?");
+		stmt8.setString(1, username);
+		ResultSet rs8 = stmt8.executeQuery();
+		BigDecimal amount = new BigDecimal("0.00");
+		if(rs8.next()){
+			amount = rs8.getBigDecimal("total");
+		}
+		stmt8.close();
 		
+		PreparedStatement stmt9 = con.prepareStatement("UPDATE tbl_order SET fld_amount = ? WHERE key_user = ?;");
+		stmt9.setBigDecimal(1, amount);
+		stmt9.setInt(2, keyUser);
+		int rs9 = stmt9.executeUpdate();
+		System.out.println(rs9 + " Amount updated");
+		stmt9.close();
+		con.close();
+	}
+
+	@Override
+	public void checkOutCart(String username) throws SQLException, DaoException {
+		Connection con = ConnectionManager.getInstance().getConnection();
+		PreparedStatement stmt = con.prepareStatement("SELECT key_order, fld_product_name, fld_quantity FROM tbl_order NATURAL JOIN tbl_order_detail NATURAL JOIN tbl_product NATURAL JOIN tbl_user WHERE fld_username = ?;");
+		stmt.setString(1, username);
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()){
+			inventoryDao.decreaseSupply(rs.getString("fld_product_name"), rs.getInt("fld_quantity"));
+		}
+		stmt.close();
+		
+		PreparedStatement stmt2 = con.prepareStatement("DELETE FROM tbl_order WHERE key_order = ?");
+		stmt2.setInt(1, getKeyOrder(username));
+		int rs2 = stmt2.executeUpdate();
+		System.out.println(rs2 + " Checkout");
+		stmt2.close();
+		con.close();
+	}
+
+	@Override
+	public int getKeyOrder(String username) throws SQLException, DaoException {
+		Connection con = ConnectionManager.getInstance().getConnection();
+		PreparedStatement stmt4 = con.prepareStatement("SELECT key_order FROM tbl_order NATURAL JOIN tbl_user WHERE fld_username = ?;");
+		stmt4.setString(1, username);
+		ResultSet rs4 = stmt4.executeQuery();
+		int keyOrder = 0;
+		if(rs4.next())
+			keyOrder = rs4.getInt("key_order");
+		stmt4.close();
+		con.close();
+		return keyOrder;
 	}
 
 }
