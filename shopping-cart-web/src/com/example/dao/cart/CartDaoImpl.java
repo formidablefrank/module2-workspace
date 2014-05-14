@@ -150,4 +150,17 @@ public class CartDaoImpl implements CartDao {
 		return keyOrder;
 	}
 
+	@Override
+	public void removeFromCart(String username) throws SQLException,
+			DaoException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void clearCart(String username) throws SQLException, DaoException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
