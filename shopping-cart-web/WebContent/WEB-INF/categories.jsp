@@ -42,13 +42,8 @@
             <li><a href="admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li class="active"><a href="categories"><i class="fa fa-table"></i> Categories</a></li>
             <li><a href="inventory"><i class="fa fa-table"></i> Inventory</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i> Add feature <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="addCategory"><i class="fa fa-edit"></i> Add category</a></li>
-                <li><a href="addProduct"><i class="fa fa-edit"></i> Add product</a></li>
-              </ul>
-            </li>
+            <li><a href="addCategory"><i class="fa fa-edit"></i> Add category</a></li>
+            <li><a href="addProduct"><i class="fa fa-edit"></i> Add product</a></li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right navbar-user">
@@ -67,7 +62,7 @@
           <div class="col-lg-12">
             <h1>Product Categories</h1>
             <ol class="breadcrumb">
-              <li><a href="index2.html"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+              <li><a href="admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
               <li class="active"><i class="fa fa-table"></i> Categories</li>
             </ol>
           </div>
@@ -98,9 +93,9 @@
         
         <c:if test="${errorMsg != null}">
         <div class="row">
-          <div class="col-lg-4">
+          <div class="col-lg-6">
             <div class="alert alert-dismissable alert-danger">
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
               <strong>Oh snap!</strong> ${errorMsg}
             </div>
           </div>
@@ -113,12 +108,12 @@
     
 
     <!-- JavaScript -->
-    <script src="js/jquery-1.10.2.js"></script>
-    <script src="js/bootstrap.js"></script>
+    <script src="assets/jquery-1.10.2.js"></script>
+    <script src="assets/bootstrap.js"></script>
 
     <!-- Page Specific Plugins -->
-    <script src="js/tablesorter/jquery.tablesorter.js"></script>
-    <script src="js/tablesorter/tables.js"></script>
+    <script src="assets/tablesorter/jquery.tablesorter.js"></script>
+    <script src="assets/tablesorter/tables.js"></script>
 
   </body>
 </html>

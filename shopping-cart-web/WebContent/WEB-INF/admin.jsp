@@ -43,13 +43,8 @@
             <li class="active"><a href="admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li><a href="categories"><i class="fa fa-table"></i> Categories</a></li>
             <li><a href="inventory"><i class="fa fa-table"></i> Inventory</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i> Add feature <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="addCategory"><i class="fa fa-edit"></i> Add category</a></li>
-                <li><a href="addProduct"><i class="fa fa-edit"></i> Add product</a></li>
-              </ul>
-            </li>
+            <li><a href="addCategory"><i class="fa fa-edit"></i> Add category</a></li>
+            <li><a href="addProduct"><i class="fa fa-edit"></i> Add product</a></li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right navbar-user">
@@ -342,15 +337,15 @@
     </div><!-- /#wrapper -->
 
     <!-- JavaScript -->
-    <script src="js/jquery-1.10.2.js"></script>
-    <script src="js/bootstrap.js"></script>
+    <script src="assets/jquery-1.10.2.js"></script>
+    <script src="assets/bootstrap.js"></script>
 
     <!-- Page Specific Plugins -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
-    <script src="js/morris/chart-data-morris.js"></script>
-    <script src="js/tablesorter/jquery.tablesorter.js"></script>
-    <script src="js/tablesorter/tables.js"></script>
+    <script src="assets/morris/chart-data-morris.js"></script>
+    <script src="assets/tablesorter/jquery.tablesorter.js"></script>
+    <script src="assets/tablesorter/tables.js"></script>
 
   </body>
 </html>
