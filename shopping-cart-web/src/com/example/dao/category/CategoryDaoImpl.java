@@ -25,15 +25,15 @@ public class CategoryDaoImpl implements CategoryDao {
 		Map<Product, Integer> list = new LinkedHashMap<>();
 		
 		Connection con = ConnectionManager.getInstance().getConnection();
-		PreparedStatement stmt = con.prepareStatement("SELECT * FROM tbl_product NATURAL JOIN tbl_category_name WHERE fld_category_name = ? ;");
+		PreparedStatement stmt = con.prepareStatement("SELECT * FROM tbl_product NATURAL JOIN tbl_category WHERE fld_category_name = ? ;");
 		stmt.setString(1, name);
 		ResultSet rs = stmt.executeQuery();
 		
 		while(rs.next()){
-			Product pro = new Product(rs.getString("fld_product_name"), rs.getString("fld_category"), new BigDecimal(rs.getString("fld_unit_price")), rs.getString("fld_product_image"));
-			list.put(pro, rs.getInt("fld_inventory_quantity"));
+			Product pro = new Product(rs.getString("fld_product_name"), rs.getString("fld_category_name"), new BigDecimal(rs.getString("fld_unit_price")), rs.getString("fld_product_image"));
+			list.put(pro, rs.getInt("fld_inventory_qty"));
 		}
-		category = new Category(list, rs.getString("fld_category_name"));
+		category = new Category(list, name);
 		
 		stmt.close();
 		con.close();

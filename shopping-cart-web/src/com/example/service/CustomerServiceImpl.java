@@ -5,26 +5,18 @@ import java.sql.SQLException;
 import com.example.dao.DaoException;
 import com.example.dao.cart.CartDao;
 import com.example.dao.cart.CartDaoImpl;
-import com.example.dao.category.CategoryDao;
-import com.example.dao.category.CategoryDaoImpl;
 import com.example.dao.inventory.InventoryDao;
 import com.example.dao.inventory.InventoryDaoImpl;
-import com.example.dao.product.ProductDao;
-import com.example.dao.product.ProductDaoImpl;
 import com.example.model.Cart;
 import com.example.model.Inventory;
 
 public class CustomerServiceImpl implements CustomerService {
 
-	private ProductDao productDao;
 	private InventoryDao inventoryDao;
-	private CategoryDao categoryDao;
 	private CartDao cartDao;
 
 	public CustomerServiceImpl() {
-		productDao = new ProductDaoImpl();
 		inventoryDao = new InventoryDaoImpl();
-		categoryDao = new CategoryDaoImpl();
 		cartDao = new CartDaoImpl();
 	}
 

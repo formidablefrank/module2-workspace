@@ -106,7 +106,7 @@ public class CartDaoImpl implements CartDao {
 		
 	}
 	
-	private void updateOrder(String username) throws SQLException, DaoException {
+	public void updateOrder(String username) throws SQLException, DaoException {
 		Connection con = ConnectionManager.getInstance().getConnection();
 		PreparedStatement stmt8 = con.prepareStatement("SELECT key_order, key_user, SUM(fld_quantity * fld_unit_price) AS total FROM tbl_order NATURAL JOIN tbl_order_detail NATURAL JOIN tbl_product NATURAL JOIN tbl_user WHERE fld_username = ?");
 		stmt8.setString(1, username);
@@ -127,6 +127,50 @@ public class CartDaoImpl implements CartDao {
 		stmt9.close();
 		con.close();
 	}
+	
+	private void removeZeroQuantity(int keyProduct) throws DaoException, SQLException{
+		Connection con = ConnectionManager.getInstance().getConnection();
+		PreparedStatement stmt = con.prepareStatement("DELETE FROM tbl_order_detail WHERE fld_quantity = 0;");
+		int rs = stmt.executeUpdate();
+		System.out.println(rs + " Zero quantity removed");
+	}
+	
+	public void updateAllCart(String productName, int quantity) throws DaoException, SQLException{
+		int keyProduct = productDao.getKeyProduct(productName);
+		int invQty = productDao.getInventoryQty(productName);
+		Connection con = ConnectionManager.getInstance().getConnection();
+		PreparedStatement stmt = con.prepareStatement("SELECT * FROM tbl_order_detail WHERE key_product = ?");
+		stmt.setInt(1, keyProduct);
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()){
+			int tempQty = rs.getInt("fld_quantity");
+			System.out.println(keyProduct + " " + invQty + " " + tempQty);
+			if(tempQty >= invQty){
+				PreparedStatement stmt2 = con.prepareStatement("UPDATE tbl_order_detail SET fld_quantity = ? WHERE key_product = ? AND key_order_detail = ?;");
+				stmt2.setInt(1, invQty);
+				stmt2.setInt(2, keyProduct);
+				stmt2.setInt(3, rs.getInt("key_order_detail"));
+				int rs2 = stmt2.executeUpdate();
+				System.out.println(rs2 + " Cart diminished");
+				stmt2.close();
+			}
+		}
+		stmt.close();
+		rs.close();
+		con.close();
+		
+		updateAllAmount();
+		removeZeroQuantity(keyProduct);
+	}
+
+	private void updateAllAmount() throws DaoException, SQLException {
+		Connection con = ConnectionManager.getInstance().getConnection();
+		PreparedStatement stmt = con.prepareStatement("SELECT * FROM tbl_order NATURAL JOIN tbl_user");
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()){
+			updateOrder(rs.getString("fld_username"));
+		}
+	}
 
 	@Override
 	public void checkOutCart(String username) throws SQLException, DaoException {
@@ -135,8 +179,12 @@ public class CartDaoImpl implements CartDao {
 		stmt.setString(1, username);
 		ResultSet rs = stmt.executeQuery();
 		while(rs.next()){
-			inventoryDao.decreaseSupply(rs.getString("fld_product_name"), rs.getInt("fld_quantity"));
+			String proName = rs.getString("fld_product_name");
+			int quantity = rs.getInt("fld_quantity");
+			inventoryDao.decreaseSupply(proName, quantity);
+			updateAllCart(proName, quantity);
 		}
+		rs.close();
 		stmt.close();
 		
 		PreparedStatement stmt2 = con.prepareStatement("DELETE FROM tbl_order WHERE key_order = ?");
@@ -189,6 +237,7 @@ public class CartDaoImpl implements CartDao {
 			stmt2.close();
 		}
 		rs.close();
+		removeZeroQuantity(productDao.getKeyProduct(productname));
 	}
 
 }

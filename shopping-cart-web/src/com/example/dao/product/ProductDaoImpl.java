@@ -71,4 +71,18 @@ public class ProductDaoImpl implements ProductDao {
 		return keyProduct;
 	}
 
+	@Override
+	public int getInventoryQty(String name) throws DaoException, SQLException {
+		Connection con = ConnectionManager.getInstance().getConnection();
+		PreparedStatement stmt4 = con.prepareStatement("SELECT fld_inventory_qty FROM tbl_product WHERE fld_product_name = ?;");
+		stmt4.setString(1, name);
+		ResultSet rs4 = stmt4.executeQuery();
+		int invQty = 0;
+		if(rs4.next())
+			invQty = rs4.getInt("fld_inventory_qty");
+		stmt4.close();
+		con.close();
+		return invQty;
+	}
+
 }

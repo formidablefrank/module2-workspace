@@ -25,9 +25,14 @@ public class CartDaoImplTest {
 		new CartDaoImpl().clearCart("cus1");
 	}
 	
-	@Test
+	//@Test
 	public void testRemoveFromCart() throws SQLException, DaoException {
 		new CartDaoImpl().removeFromCart("cus1", "Crop", 1);
+	}
+	
+	@Test
+	public void updateAllCart() throws DaoException, SQLException {
+		new CartDaoImpl().updateAllCart("Crop", 60);;
 	}
 
 }
