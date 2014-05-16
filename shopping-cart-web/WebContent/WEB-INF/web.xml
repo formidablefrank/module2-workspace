@@ -77,6 +77,30 @@
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
   </filter-mapping>
+  <filter-mapping>
+    <filter-name>Admin</filter-name>
+    <servlet-name>addCategory</servlet-name>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>Admin</filter-name>
+    <servlet-name>processAddCategory</servlet-name>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>Admin</filter-name>
+    <servlet-name>addProduct</servlet-name>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>Admin</filter-name>
+    <servlet-name>processAddProduct</servlet-name>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+  </filter-mapping>
   <filter>
     <display-name>Cust</display-name>
     <filter-name>Cust</filter-name>
@@ -107,5 +131,45 @@
   <servlet-mapping>
     <servlet-name>Inventory</servlet-name>
     <url-pattern>/inventory</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddCategory</display-name>
+    <servlet-name>AddCategory</servlet-name>
+    <servlet-class>com.example.controller.AddCategory</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddCategory</servlet-name>
+    <url-pattern>/addCategory</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ProcessAddCategory</display-name>
+    <servlet-name>ProcessAddCategory</servlet-name>
+    <servlet-class>com.example.controller.ProcessAddCategory</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProcessAddCategory</servlet-name>
+    <url-pattern>/processAddCategory</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddProduct</display-name>
+    <servlet-name>AddProduct</servlet-name>
+    <servlet-class>com.example.controller.AddProduct</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddProduct</servlet-name>
+    <url-pattern>/addProduct</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ProcessAddProduct</display-name>
+    <servlet-name>ProcessAddProduct</servlet-name>
+    <servlet-class>com.example.controller.ProcessAddProduct</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProcessAddProduct</servlet-name>
+    <url-pattern>/processAddProduct</url-pattern>
   </servlet-mapping>
 </web-app>

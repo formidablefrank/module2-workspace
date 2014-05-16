@@ -4,7 +4,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
   <head>
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -40,9 +39,9 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
             <li><a href="admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active"><a href="categories"><i class="fa fa-table"></i> Categories</a></li>
+            <li><a href="categories"><i class="fa fa-table"></i> Categories</a></li>
             <li><a href="inventory"><i class="fa fa-table"></i> Inventory</a></li>
-            <li><a href="addCategory"><i class="fa fa-edit"></i> Add category</a></li>
+            <li class="active"><a href="addCategory"><i class="fa fa-edit"></i> Add category</a></li>
             <li><a href="addProduct"><i class="fa fa-edit"></i> Add product</a></li>
           </ul>
 
@@ -60,36 +59,40 @@
 
         <div class="row">
           <div class="col-lg-12">
-            <h1>Product Categories</h1>
+            <h1>Add Category</h1>
             <ol class="breadcrumb">
               <li><a href="admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-              <li class="active"><i class="fa fa-table"></i> Categories</li>
+              <li><i class="fa fa-dashboard"></i> Add Feature</li>
+              <li class="active"><i class="fa fa-edit"></i> Add Category</li>
             </ol>
           </div>
         </div><!-- /.row -->
 
         <div class="row">
           <div class="col-lg-6">
-            <div class="table-responsive">
-              <table class="table table-hover table-bordered table-striped tablesorter">
-                <thead>
-                  <tr>
-                    <th>Name <i class="fa fa-sort"></i></th>
-                    <th>Description <i class="fa fa-sort"></i></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <c:forEach items="${categoryList}" var="category">
-                  	<tr>
-                      <td>${category}</td>
-                      <td></td>
-                    </tr>
-                  </c:forEach>
-                </tbody>
-              </table>
-            </div>
+
+            <form role="form" method="POST" action="processAddCategory">
+
+              <div class="form-group">
+                <label>Name</label>
+                <input class="form-control" placeholder="CategoryZ" name="category">
+              </div>
+
+              <!--<div class="form-group">
+                <label>Description</label>
+                <input class="form-control" placeholder="Some text here">
+              </div>-->
+
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="reset" class="btn btn-danger">Reset</button>  
+
+            </form>
+
           </div>
         </div><!-- /.row -->
+        
+        <br>
+        <br>
         
         <c:if test="${errorMsg != null}">
         <div class="row">
@@ -100,6 +103,17 @@
             </div>
           </div>
         </div>
+        </c:if>
+        
+        <c:if test="${successMsg != null}">
+        <div class="row">
+        <div class="col-lg-6">
+            <div class="alert alert-dismissable alert-success">
+              <!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+              <strong>${successMsg}</strong> <a href="categories" class="alert-link">Categories</a> list updated.
+            </div>
+          </div>
+          </div>
         </c:if>
 
       </div><!-- /#page-wrapper -->

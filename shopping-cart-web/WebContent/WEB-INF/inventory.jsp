@@ -4,7 +4,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
   <head>
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -73,7 +72,7 @@
           <div class="col-lg-12">
             <h2>${category.getName()}</h2>
             <div class="table-responsive">
-              <table class="table table-hover tablesorter">
+              <table class="table table-hover table-bordered table-striped tablesorter">
                 <thead>
                   <tr>
                     <th>Name <i class="fa fa-sort"></i></th>
@@ -86,7 +85,7 @@
                   <c:forEach items="${category.getList().keySet()}" var="product">
                   	<tr>
                       <td>${product.getName()}</td>
-                      <td>${product.getPrice()}</td>
+                      <td>Php ${product.getPrice()}</td>
                       <td>${category.getList().get(product)}</td>
                       <td><img src="${product.getImage()}" width="100" height="100"></img></td>
                     </tr>
