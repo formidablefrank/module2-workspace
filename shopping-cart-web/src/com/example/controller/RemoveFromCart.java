@@ -3,21 +3,19 @@ package com.example.controller;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.example.dao.DaoException;
-import com.example.model.Category;
 import com.example.service.CustomerService;
 import com.example.service.CustomerServiceImpl;
 
 /**
- * Servlet implementation class Cust
+ * Servlet implementation class RemoveFromCart
  */
-public class Cust extends HttpServlet {
+public class RemoveFromCart extends HttpServlet {
 	private CustomerService cs;
 	
 	private static final long serialVersionUID = 1L;
@@ -25,7 +23,7 @@ public class Cust extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Cust() {
+    public RemoveFromCart() {
         super();
         cs = new CustomerServiceImpl();
     }
@@ -34,32 +32,27 @@ public class Cust extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		com.example.model.Inventory inv = null;
-		try {
-			inv = cs.viewProducts();
-		} catch (DaoException e) {
-			request.setAttribute("errorMsg", "Error in database connection. Try again later.");
-			e.printStackTrace();
-		} catch (SQLException e) {
-			request.setAttribute("errorMsg", "Error in database query. Try again later.");
-			e.printStackTrace();
-		}
-		if(inv != null){
-			request.setAttribute("inventory", inv);
-			for(Category cat: inv.getCategories()){
-				if(cat.getName().equals(request.getParameter("category")))
-					request.setAttribute("category", cat);
-			}
-		}
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/cust.jsp");
-		rd.forward(request, response);
+		// TODO Auto-generated method stub
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		try {
+			cs.removeFromCart((String)request.getSession().getAttribute("username"), request.getParameter("productName"), Integer.parseInt(request.getParameter("quantity")));
+			request.setAttribute("successMsg", "Success!");
+		} catch (NumberFormatException e) {
+			request.setAttribute("errorMsg", "Invalid argument for quantity!");
+			e.printStackTrace();
+		} catch (SQLException e) {
+			request.setAttribute("errorMsg", "Error in database connection. Try again later.");
+			e.printStackTrace();
+		} catch (DaoException e) {
+			request.setAttribute("errorMsg", "Error in database query. Try again later.");
+			e.printStackTrace();
+		}
+		request.getServletContext().getRequestDispatcher("/viewCart").forward(request, response);
 	}
 
 }

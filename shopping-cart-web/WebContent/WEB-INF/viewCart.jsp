@@ -40,8 +40,8 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
-            <li class="active"><a href="cust"><i class="fa fa-edit"></i> Shop</a></li>
-            <li><a href="viewCart"><i class="fa fa-table"></i> View Cart</a></li>
+            <li><a href="cust"><i class="fa fa-edit"></i> Shop</a></li>
+            <li class="active"><a href="cart"><i class="fa fa-table"></i> View Cart</a></li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right navbar-user">
@@ -58,65 +58,49 @@
 
         <div class="row">
           <div class="col-lg-12">
-            <h1>Products List</h1>
+            <h1>Shopping Cart</h1>
             <ol class="breadcrumb">
               <li><a href="cust"><i class="fa fa-dashboard"></i> Customer Page</a></li>
-              <li class="active"><i class="fa fa-edit"></i> Shop</li>
+              <li class="active"><i class="fa fa-edit"></i> View Cart</li>
             </ol>
           </div>
         </div><!-- /.row -->
         
-        <div class="row">
-	      <div class="col-lg-4">
-            <form role="form" action="cust">
-               <label>Select category:</label>
-               <select class="form-control" name="category" onchange="this.form.submit()">
-                 <option>Clear Filter</option>
-                 <c:forEach items="${inventory.getCategories()}" var="category">
-                   <option>${category.getName()}</option>
-                 </c:forEach>
-               </select>
-            </form>
-	      </div>
-        </div><!-- /.row -->
-        
-        <c:if test="${category != null}">
+        <c:if test="${cart != null}">
         <div class="row">
           <div class="col-lg-12">
-            <h2>${category.getName()}</h2>
             <div class="table-responsive">
               <table class="table table-hover table-bordered table-striped tablesorter">
                 <thead>
                   <tr>
                     <th>Name <i class="fa fa-sort"></i></th>
                     <th>Price <i class="fa fa-sort"></i></th>
-                    <th>Available Qty <i class="fa fa-sort"></i></th>
+                    <th>Quantity <i class="fa fa-sort"></i></th>
+                    <th>Category <i class="fa fa-sort"></i></th>
                     <th>Image</th>
-                    <th>Add to Cart</th>
+                    <th>Remove from Cart</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <c:forEach items="${category.getList().keySet()}" var="product">
+                  <c:forEach items="${cart.getList().keySet()}" var="product">
                   	<tr>
                       <td>${product.getName()}</td>
                       <td>Php ${product.getPrice()}</td>
-                      <td>${category.getList().get(product)}</td>
+                      <td>${cart.getList().get(product)}</td>
+                      <td>${product.getCategory()}</td>
                       <td><img src="${product.getImage()}" width="50" height="50"></img></td>
                       <td>
                       	<div class = "row">
-                      	  <div class="col-lg-6">
-                      	<form action="addToCart" method="post" role="form">
+                      	  <div class="col-lg-4">
+                      		<form action="removeFromCart" method="post" role="form">
                       	  	<select class="form-control" name="quantity" onchange="this.form.submit()">
-                      	  	  <c:forEach begin="0" end="${category.getList().get(product)}" var="q">
+                      	  	  <c:forEach begin="0" end="${cart.getList().get(product)}" var="q">
                       	  	    <option>${q}</option>
                       	  	  </c:forEach>
                       	  	</select>
                       	    <input type="hidden" name="productName" value="${product.getName()}">
-                      	    <input type="hidden" name="category" value="${category.getName()}">
-                      	  	
-                      	</form>
+                      		</form>
                       	  </div>
-                      	  
                       	</div>
                       </td>
                     </tr>
@@ -126,7 +110,57 @@
             </div>
           </div>
         </div><!-- /.row -->
+        
         </c:if>
+        
+        <c:if test="${!cart.getList().isEmpty()}">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="alert alert-dismissable alert-info">
+              <!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+              <strong>Grand total:</strong> Php ${cart.getAmount()}
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="alert alert-dismissable alert-info">
+              <!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+              Your cart might get diminished. You cannot add products to cart greater than what is available.
+            </div>
+          </div>
+        </div>
+        </c:if>
+        
+        <c:choose>
+	       <c:when test="${cart.getList().isEmpty()}">
+			 <div class="row">
+        <div class="col-lg-6">
+            <div class="alert alert-dismissable alert-info">
+              <!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+              <strong>Cart is empty!</strong> <a href="cust" class="alert-link">Get an item!</a>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-lg-2">
+          	<a href="checkOut"><button type="submit" class="btn btn-primary disabled">Check-out Cart</button></a>
+          </div>
+          <div class="col-lg-2">
+            <a href="clearCart"><button type="reset" class="btn btn-danger disabled">Clear Cart</button></a>
+          </div>
+        </div><!-- /.row -->	       
+	       </c:when>
+	       <c:otherwise>
+	       <div class="row">
+          <div class="col-lg-2">
+          	<a href="checkOut"><button type="submit" class="btn btn-primary">Check-out Cart</button></a>
+          </div>
+          <div class="col-lg-2">
+            <a href="clearCart"><button type="reset" class="btn btn-danger">Clear Cart</button></a>
+          </div>
+        </div><!-- /.row -->
+	       </c:otherwise>
+        </c:choose>
 
 		<br>
         

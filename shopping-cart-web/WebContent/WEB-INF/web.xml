@@ -112,6 +112,36 @@
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
   </filter-mapping>
+  <filter-mapping>
+    <filter-name>Cust</filter-name>
+    <servlet-name>AddToCart</servlet-name>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>Cust</filter-name>
+    <servlet-name>ViewCart</servlet-name>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>Cust</filter-name>
+    <servlet-name>RemoveFromCart</servlet-name>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>Cust</filter-name>
+    <servlet-name>ClearCart</servlet-name>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>Cust</filter-name>
+    <servlet-name>CheckOut</servlet-name>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+  </filter-mapping>
   <servlet>
     <description></description>
     <display-name>Categories</display-name>
@@ -171,5 +201,55 @@
   <servlet-mapping>
     <servlet-name>ProcessAddProduct</servlet-name>
     <url-pattern>/processAddProduct</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddToCart</display-name>
+    <servlet-name>AddToCart</servlet-name>
+    <servlet-class>com.example.controller.AddToCart</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddToCart</servlet-name>
+    <url-pattern>/addToCart</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ViewCart</display-name>
+    <servlet-name>ViewCart</servlet-name>
+    <servlet-class>com.example.controller.ViewCart</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ViewCart</servlet-name>
+    <url-pattern>/viewCart</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ClearCart</display-name>
+    <servlet-name>ClearCart</servlet-name>
+    <servlet-class>com.example.controller.ClearCart</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ClearCart</servlet-name>
+    <url-pattern>/clearCart</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CheckOut</display-name>
+    <servlet-name>CheckOut</servlet-name>
+    <servlet-class>com.example.controller.CheckOut</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CheckOut</servlet-name>
+    <url-pattern>/checkOut</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>RemoveFromCart</display-name>
+    <servlet-name>RemoveFromCart</servlet-name>
+    <servlet-class>com.example.controller.RemoveFromCart</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RemoveFromCart</servlet-name>
+    <url-pattern>/removeFromCart</url-pattern>
   </servlet-mapping>
 </web-app>

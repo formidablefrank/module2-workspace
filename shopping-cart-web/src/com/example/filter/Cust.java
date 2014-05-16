@@ -45,6 +45,11 @@ public class Cust implements Filter {
 		HttpSession hs = hssr.getSession();
 		String username = (String) hs.getAttribute("username");
 		String userRole = null;
+		if(username == null){
+			HttpServletResponse hsr = (HttpServletResponse) response;
+			hsr.sendRedirect("logout");
+			return;
+		}
 		try {
 			userRole = loginService.getUser(username).getRole();
 		} catch (DaoException e) {

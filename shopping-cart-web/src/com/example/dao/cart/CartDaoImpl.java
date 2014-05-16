@@ -36,16 +36,17 @@ public class CartDaoImpl implements CartDao {
 		Map<Product, Integer> list = new LinkedHashMap<>();
 		
 		Connection con = ConnectionManager.getInstance().getConnection();
-		PreparedStatement stmt = con.prepareStatement("SELECT * FROM tbl_order_detail NATURAL JOIN tbl_order NATURAL JOIN tbl_product NATURAL JOIN tbl_user WHERE fld_username = ?;");
+		PreparedStatement stmt = con.prepareStatement("SELECT * FROM tbl_order_detail NATURAL JOIN tbl_order NATURAL JOIN tbl_product NATURAL JOIN tbl_category NATURAL JOIN tbl_user WHERE fld_username = ?;");
 		stmt.setString(1, username);
 		ResultSet rs = stmt.executeQuery();
+		BigDecimal amount = null;
 		
 		while(rs.next()){
-			Product pro = new Product(rs.getString("fld_product_name"), rs.getString("fld_category"), new BigDecimal(rs.getString("fld_unit_price")), rs.getString("fld_product_image"));
+			Product pro = new Product(rs.getString("fld_product_name"), rs.getString("fld_category_name"), new BigDecimal(rs.getString("fld_unit_price")), rs.getString("fld_product_image"));
 			list.put(pro, rs.getInt("fld_quantity"));
+			amount = rs.getBigDecimal("fld_amount");
 		}
-		cart = new Cart(list, username, new BigDecimal(rs.getString("fld_amount")));
-		
+		cart = new Cart(list, username, amount);
 		stmt.close();
 		con.close();
 		return cart;
@@ -103,7 +104,7 @@ public class CartDaoImpl implements CartDao {
 		rs.close();
 		con.close();
 		updateOrder(username);
-		
+		updateAllCart(productname, quantity);
 	}
 	
 	public void updateOrder(String username) throws SQLException, DaoException {
@@ -238,6 +239,7 @@ public class CartDaoImpl implements CartDao {
 		}
 		rs.close();
 		removeZeroQuantity(productDao.getKeyProduct(productname));
+		updateOrder(username);
 	}
 
 }

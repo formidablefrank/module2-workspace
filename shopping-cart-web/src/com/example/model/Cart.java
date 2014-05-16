@@ -62,15 +62,14 @@ public class Cart {
 	}
 	
 	public BigDecimal getTotal(){
-		BigDecimal total = new BigDecimal("0.00");
+		BigDecimal total = BigDecimal.ZERO;
 		for(Product pro: list.keySet()){
-			total.add(pro.getPrice().multiply(new BigDecimal(list.get(pro))));
+			total = total.add(pro.getPrice().multiply(new BigDecimal(list.get(pro))));
 		}
 		amount = total;
 		return total;
 	}
 	public BigDecimal getAmount() {
-		getTotal();
 		return amount;
 	}
 	public void setAmount(BigDecimal amount) {

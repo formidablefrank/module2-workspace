@@ -87,7 +87,7 @@
                       <td>${product.getName()}</td>
                       <td>Php ${product.getPrice()}</td>
                       <td>${category.getList().get(product)}</td>
-                      <td><img src="${product.getImage()}" width="100" height="100"></img></td>
+                      <td><img src="${product.getImage()}" width="50" height="50"></img></td>
                     </tr>
                   </c:forEach>
                 </tbody>
