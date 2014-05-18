@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 	<title>Buy From Us | Home Page</title>
@@ -395,11 +395,11 @@
 	    
       <section class="page1">
         <div class="page_container">
-          <h1>Buy From Us</h1>
+          <h1>&nbsp;&nbsp;Buy From Us</h1>
           <h2>Mr. I. M. Cheap owns Buy From Us, a small convenience store in a small town in the Philippines.</h2>
-          <p class="credit">Created by <a href="http://about.me/bosz_frank07">Frank</a>; credits to <b>Pete R.</b>, Founder of <a href="http://www.bucketlistly.com" target="_blank">BucketListly</a></p>
+          <p class="credit">Created by <a href="http://about.me/bosz.frank07">Frank</a>; credits to <b>Pete R.</b>, Founder of <a href="http://www.bucketlistly.com" target="_blank">BucketListly</a></p>
           <div class="btns">
-  	        <a class="reload btn" href="#3">Shop Now!</a>
+  	        <a class="reload btn" href="#3" onclick="window.location.reload(true);">Shop Now!</a>
   	      </div>
   	    </div>
   	    <img src="assets/phones.png" alt="phones">
@@ -427,6 +427,7 @@
 	      <div class="page_container">
           <h1>Shop now!</h1>
           <h2>Log in as administrator or as customer.</h2>
+          <br>
           <div>
           <c:choose>
           	<c:when test="${none}">
@@ -446,7 +447,7 @@
   	    </div>
       </section>
     </div>
-    <a class="back" href="#2">See our bestsellers!</a>
+    <a class="back" href="#2" onclick="window.location.reload(true);">See our bestsellers!</a>
   </div>
 </body>
 </html>

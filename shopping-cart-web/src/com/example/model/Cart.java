@@ -70,6 +70,7 @@ public class Cart {
 		return total;
 	}
 	public BigDecimal getAmount() {
+		getTotal();
 		return amount;
 	}
 	public void setAmount(BigDecimal amount) {

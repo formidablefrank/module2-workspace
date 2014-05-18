@@ -13,25 +13,16 @@ import com.example.model.Cart;
 import com.example.service.CustomerService;
 import com.example.service.CustomerServiceImpl;
 
-/**
- * Servlet implementation class ViewCart
- */
 public class ViewCart extends HttpServlet {
 	private CustomerService cs;
 	
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public ViewCart() {
         super();
         cs = new CustomerServiceImpl();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Cart cart = null;
 		try {
@@ -47,9 +38,6 @@ public class ViewCart extends HttpServlet {
 		request.getServletContext().getRequestDispatcher("/WEB-INF/viewCart.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}

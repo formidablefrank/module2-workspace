@@ -12,32 +12,19 @@ import com.example.dao.DaoException;
 import com.example.service.AdminService;
 import com.example.service.AdminServiceImpl;
 
-/**
- * Servlet implementation class ProcessAddCategory
- */
 public class ProcessAddCategory extends HttpServlet {
 	private AdminService as;
 	
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public ProcessAddCategory() {
         super();
         as = new AdminServiceImpl();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String tempCategory = request.getParameter("category");
 		if(tempCategory == null || tempCategory.equals("")){

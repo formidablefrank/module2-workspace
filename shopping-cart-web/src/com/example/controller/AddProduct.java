@@ -16,25 +16,16 @@ import com.example.model.Inventory;
 import com.example.service.AdminService;
 import com.example.service.AdminServiceImpl;
 
-/**
- * Servlet implementation class AddProduct
- */
 public class AddProduct extends HttpServlet {
 	private AdminService as;
 	
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public AddProduct() {
         super();
         as = new AdminServiceImpl();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Inventory inv = null;
 		try {
@@ -57,9 +48,6 @@ public class AddProduct extends HttpServlet {
 		request.getServletContext().getRequestDispatcher("/WEB-INF/addProduct.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}

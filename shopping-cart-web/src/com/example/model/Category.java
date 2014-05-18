@@ -84,7 +84,7 @@ public class Category {
 	public BigDecimal getTotal(){
 		BigDecimal total = new BigDecimal("0.00");
 		for(Product pro: list.keySet()){
-			total.add(pro.getPrice().multiply(new BigDecimal(list.get(pro))));
+			total = total.add(pro.getPrice().multiply(new BigDecimal(list.get(pro))));
 		}
 		return total;
 	}

@@ -55,7 +55,7 @@ public class Inventory {
 	public BigDecimal getTotal(){
 		BigDecimal total = new BigDecimal("0.00");
 		for(Category cat: categories){
-			total.add(cat.getTotal());
+			total = total.add(cat.getTotal());
 		}
 		amount = total;
 		return total;

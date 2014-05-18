@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,10 +25,10 @@
     <div id="wrapper">
 
       <!-- Sidebar -->
-      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <nav class="navbar navbar-inverse navbar-fixed-top">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <button type="button" class="navbar-toggle">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -46,7 +46,7 @@
 
           <ul class="nav navbar-nav navbar-right navbar-user">
             <li class="dropdown user-dropdown">
-              <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> ${sessionScope.username}</a>
+              <a href="" class="dropdown-toggle"><i class="fa fa-user"></i> ${sessionScope.username}</a>
             </li>
             <li class="dropdown user-dropdown"><a href="home">Home Page	</a></li>
             <li class="dropdown user-dropdown"><a href="logout">Log Out</a></li>
@@ -68,7 +68,7 @@
         
         <div class="row">
 	      <div class="col-lg-4">
-            <form role="form" action="cust">
+            <form action="cust">
                <label>Select category:</label>
                <select class="form-control" name="category" onchange="this.form.submit()">
                  <option>Clear Filter</option>
@@ -105,7 +105,7 @@
                       <td>
                       	<div class = "row">
                       	  <div class="col-lg-6">
-                      	<form action="addToCart" method="post" role="form">
+                      	<form action="addToCart" method="post">
                       	  	<select class="form-control" name="quantity" onchange="this.form.submit()">
                       	  	  <c:forEach begin="0" end="${category.getList().get(product)}" var="q">
                       	  	    <option>${q}</option>
@@ -113,10 +113,8 @@
                       	  	</select>
                       	    <input type="hidden" name="productName" value="${product.getName()}">
                       	    <input type="hidden" name="category" value="${category.getName()}">
-                      	  	
                       	</form>
                       	  </div>
-                      	  
                       	</div>
                       </td>
                     </tr>
@@ -152,6 +150,7 @@
           </div>
         </c:if>
     </div><!-- /#wrapper -->
+    </div>
 
     <!-- JavaScript -->
     <script src="assets/jquery-1.10.2.js"></script>

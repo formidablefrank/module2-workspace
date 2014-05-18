@@ -74,7 +74,7 @@ public class CartDaoImpl implements CartDao {
 			stmt2.setInt(1, quantity);
 			stmt2.setInt(2, keyOrderDetail);
 			int rs2 = stmt2.executeUpdate();
-			System.out.println(rs2 + " Cart updated");
+//			System.out.println(rs2 + " Cart updated");
 			stmt2.close();
 		}
 		else{
@@ -84,7 +84,7 @@ public class CartDaoImpl implements CartDao {
 				PreparedStatement stmt6 = con.prepareStatement("INSERT INTO tbl_order (key_user, fld_amount) VALUES (?, 0);");
 				stmt6.setInt(1, keyUser);
 				int rs6 = stmt6.executeUpdate();
-				System.out.println(rs6 + " New user shops");
+//				System.out.println(rs6 + " New user shops");
 				stmt6.close();
 			}
 			keyOrder = getKeyOrder(username);
@@ -98,7 +98,7 @@ public class CartDaoImpl implements CartDao {
 			stmt3.setInt(2, keyProduct);
 			stmt3.setInt(3, quantity);
 			int rs3 = stmt3.executeUpdate();
-			System.out.println(rs3 + " Insert new to cart");
+//			System.out.println(rs3 + " Insert new to cart");
 			stmt3.close();
 		}
 		rs.close();
@@ -124,7 +124,7 @@ public class CartDaoImpl implements CartDao {
 		stmt9.setBigDecimal(1, amount);
 		stmt9.setInt(2, userDao.getKeyUser(username));
 		int rs9 = stmt9.executeUpdate();
-		System.out.println(rs9 + " Amount updated");
+//		System.out.println(rs9 + " Amount updated");
 		stmt9.close();
 		con.close();
 	}
@@ -133,7 +133,7 @@ public class CartDaoImpl implements CartDao {
 		Connection con = ConnectionManager.getInstance().getConnection();
 		PreparedStatement stmt = con.prepareStatement("DELETE FROM tbl_order_detail WHERE fld_quantity = 0;");
 		int rs = stmt.executeUpdate();
-		System.out.println(rs + " Zero quantity removed");
+//		System.out.println(rs + " Zero quantity removed");
 	}
 	
 	public void updateAllCart(String productName, int quantity) throws DaoException, SQLException{
@@ -145,14 +145,14 @@ public class CartDaoImpl implements CartDao {
 		ResultSet rs = stmt.executeQuery();
 		while(rs.next()){
 			int tempQty = rs.getInt("fld_quantity");
-			System.out.println(keyProduct + " " + invQty + " " + tempQty);
+//			System.out.println(keyProduct + " " + invQty + " " + tempQty);
 			if(tempQty >= invQty){
 				PreparedStatement stmt2 = con.prepareStatement("UPDATE tbl_order_detail SET fld_quantity = ? WHERE key_product = ? AND key_order_detail = ?;");
 				stmt2.setInt(1, invQty);
 				stmt2.setInt(2, keyProduct);
 				stmt2.setInt(3, rs.getInt("key_order_detail"));
 				int rs2 = stmt2.executeUpdate();
-				System.out.println(rs2 + " Cart diminished");
+//				System.out.println(rs2 + " Cart diminished");
 				stmt2.close();
 			}
 		}
@@ -191,7 +191,7 @@ public class CartDaoImpl implements CartDao {
 		PreparedStatement stmt2 = con.prepareStatement("DELETE FROM tbl_order WHERE key_order = ?");
 		stmt2.setInt(1, getKeyOrder(username));
 		int rs2 = stmt2.executeUpdate();
-		System.out.println(rs2 + " Checkout");
+//		System.out.println(rs2 + " Checkout");
 		stmt2.close();
 		con.close();
 	}
@@ -216,7 +216,7 @@ public class CartDaoImpl implements CartDao {
 		PreparedStatement stmt2 = con.prepareStatement("DELETE FROM tbl_order_detail WHERE key_order = ?");
 		stmt2.setInt(1, getKeyOrder(username));
 		int rs2 = stmt2.executeUpdate();
-		System.out.println(rs2 + " Clear cart");
+//		System.out.println(rs2 + " Clear cart");
 		stmt2.close();
 		con.close();
 		updateOrder(username);
@@ -234,7 +234,7 @@ public class CartDaoImpl implements CartDao {
 			stmt2.setInt(1, quantity);
 			stmt2.setInt(2, keyOrderDetail);
 			int rs2 = stmt2.executeUpdate();
-			System.out.println(rs2 + " Removed from cart");
+//			System.out.println(rs2 + " Removed from cart");
 			stmt2.close();
 		}
 		rs.close();

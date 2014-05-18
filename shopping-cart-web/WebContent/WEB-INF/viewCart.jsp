@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +25,7 @@
     <div id="wrapper">
 
       <!-- Sidebar -->
-      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <nav class="navbar navbar-inverse navbar-fixed-top">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -92,7 +92,7 @@
                       <td>
                       	<div class = "row">
                       	  <div class="col-lg-4">
-                      		<form action="removeFromCart" method="post" role="form">
+                      		<form action="removeFromCart" method="post">
                       	  	<select class="form-control" name="quantity" onchange="this.form.submit()">
                       	  	  <c:forEach begin="0" end="${cart.getList().get(product)}" var="q">
                       	  	    <option>${q}</option>
@@ -186,6 +186,7 @@
           </div>
         </c:if>
     </div><!-- /#wrapper -->
+    </div>
 
     <!-- JavaScript -->
     <script src="assets/jquery-1.10.2.js"></script>

@@ -10,29 +10,34 @@ import com.example.dao.DaoException;
 
 public class CartDaoImplTest {
 
-	//@Test
+	@Test
 	public void testAddToCart() throws SQLException, DaoException {
-		new CartDaoImpl().addToCart("cus1", "Crop", 3);
+		CartDaoImpl cartDaoImpl = new CartDaoImpl();
+		cartDaoImpl.addToCart("cus1", "Crop", 3);
 	}
 	
-	//@Test
+	@Test
 	public void testCheckOutCart() throws SQLException, DaoException {
-		new CartDaoImpl().checkOutCart("cus1");
+		CartDaoImpl cartDaoImpl = new CartDaoImpl();
+		cartDaoImpl.checkOutCart("cus1");
 	}
 	
-	//@Test
+	@Test
 	public void testClearCart() throws SQLException, DaoException {
-		new CartDaoImpl().clearCart("cus1");
+		CartDaoImpl cartDaoImpl = new CartDaoImpl();
+		cartDaoImpl.clearCart("cus1");
 	}
 	
-	//@Test
+	@Test
 	public void testRemoveFromCart() throws SQLException, DaoException {
-		new CartDaoImpl().removeFromCart("cus1", "Crop", 1);
+		CartDaoImpl cartDaoImpl = new CartDaoImpl();
+		cartDaoImpl.removeFromCart("cus1", "Crop", 1);
 	}
 	
 	@Test
 	public void updateAllCart() throws DaoException, SQLException {
-		new CartDaoImpl().updateAllCart("Crop", 60);;
+		CartDaoImpl cartDaoImpl = new CartDaoImpl();
+		cartDaoImpl.updateAllCart("Crop", 60);;
 	}
 
 }

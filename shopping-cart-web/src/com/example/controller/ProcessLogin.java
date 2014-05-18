@@ -15,32 +15,20 @@ import com.example.model.User;
 import com.example.service.LoginService;
 import com.example.service.LoginServiceImpl;
 
-/**
- * Servlet implementation class ProcessLogin
- */
 public class ProcessLogin extends HttpServlet {
 	private LoginService loginService;
 	
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public ProcessLogin() {
         super();
         loginService = new LoginServiceImpl();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User user = null;
 		try {
