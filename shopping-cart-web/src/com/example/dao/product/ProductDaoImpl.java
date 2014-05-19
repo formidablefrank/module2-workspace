@@ -28,7 +28,7 @@ public class ProductDaoImpl implements ProductDao {
 		while(rs.next()){
 			pro = new Product(rs.getString("fld_product_name"), rs.getString("fld_category"), new BigDecimal(rs.getString("fld_unit_price")), rs.getString("fld_product_image"));
 		}
-		
+		rs.close();
 		stmt.close();
 		con.close();
 		
@@ -45,6 +45,7 @@ public class ProductDaoImpl implements ProductDao {
 		while(rs.next()){
 			category = rs.getInt("key_category");
 		}
+		rs.close();
 		stmt.close();
 		
 		PreparedStatement stmt2 = con.prepareStatement("INSERT INTO tbl_product (`key_category`, `fld_product_name`, `fld_inventory_qty`, `fld_unit_price`, `fld_product_image`) VALUES (?, ?, ?, ?, ?);");
@@ -68,6 +69,7 @@ public class ProductDaoImpl implements ProductDao {
 		int keyProduct = 0;
 		if(rs4.next())
 			keyProduct = rs4.getInt("key_product");
+		rs4.close();
 		stmt4.close();
 		con.close();
 		return keyProduct;
@@ -82,6 +84,7 @@ public class ProductDaoImpl implements ProductDao {
 		int invQty = 0;
 		if(rs4.next())
 			invQty = rs4.getInt("fld_inventory_qty");
+		rs4.close();
 		stmt4.close();
 		con.close();
 		return invQty;

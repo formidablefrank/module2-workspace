@@ -47,6 +47,7 @@ public class CartDaoImpl implements CartDao {
 			amount = rs.getBigDecimal("fld_amount");
 		}
 		cart = new Cart(list, username, amount);
+		rs.close();
 		stmt.close();
 		con.close();
 		return cart;
@@ -76,6 +77,7 @@ public class CartDaoImpl implements CartDao {
 			int rs2 = stmt2.executeUpdate();
 //			System.out.println(rs2 + " Cart updated");
 			stmt2.close();
+			rs.close();
 		}
 		else{
 			//get keyOrder from that user
@@ -101,7 +103,6 @@ public class CartDaoImpl implements CartDao {
 //			System.out.println(rs3 + " Insert new to cart");
 			stmt3.close();
 		}
-		rs.close();
 		con.close();
 		updateOrder(username);
 		updateAllCart(productname, quantity);
@@ -116,6 +117,7 @@ public class CartDaoImpl implements CartDao {
 		if(rs8.next()){
 			amount = rs8.getBigDecimal("total");
 		}
+		rs8.close();
 		stmt8.close();
 		
 		if(amount == null) amount = new BigDecimal("0.00");
@@ -129,11 +131,13 @@ public class CartDaoImpl implements CartDao {
 		con.close();
 	}
 	
-	private void removeZeroQuantity(int keyProduct) throws DaoException, SQLException{
+	private void removeZeroQuantityFromCart(int keyProduct) throws DaoException, SQLException{
 		Connection con = ConnectionManager.getInstance().getConnection();
 		PreparedStatement stmt = con.prepareStatement("DELETE FROM tbl_order_detail WHERE fld_quantity = 0;");
 		int rs = stmt.executeUpdate();
 //		System.out.println(rs + " Zero quantity removed");
+		stmt.close();
+		con.close();
 	}
 	
 	public void updateAllCart(String productName, int quantity) throws DaoException, SQLException{
@@ -161,7 +165,7 @@ public class CartDaoImpl implements CartDao {
 		con.close();
 		
 		updateAllAmount();
-		removeZeroQuantity(keyProduct);
+		removeZeroQuantityFromCart(keyProduct);
 	}
 
 	private void updateAllAmount() throws DaoException, SQLException {
@@ -171,6 +175,9 @@ public class CartDaoImpl implements CartDao {
 		while(rs.next()){
 			updateOrder(rs.getString("fld_username"));
 		}
+		rs.close();
+		stmt.close();
+		con.close();
 	}
 
 	@Override
@@ -226,10 +233,10 @@ public class CartDaoImpl implements CartDao {
 	public void removeFromCart(String username, String productname, int quantity)
 			throws SQLException, DaoException {
 		ResultSet rs = getOrderedProductDetail(username, productname);
-		
+		Connection con = null;
 		while(rs.next()){
 			int keyOrderDetail = rs.getInt("key_order_detail");
-			Connection con = ConnectionManager.getInstance().getConnection();
+			con = ConnectionManager.getInstance().getConnection();
 			PreparedStatement stmt2 = con.prepareStatement("UPDATE tbl_order_detail SET fld_quantity = fld_quantity - ? WHERE key_order_detail = ?;");
 			stmt2.setInt(1, quantity);
 			stmt2.setInt(2, keyOrderDetail);
@@ -237,8 +244,9 @@ public class CartDaoImpl implements CartDao {
 //			System.out.println(rs2 + " Removed from cart");
 			stmt2.close();
 		}
+		con.close();
 		rs.close();
-		removeZeroQuantity(productDao.getKeyProduct(productname));
+		removeZeroQuantityFromCart(productDao.getKeyProduct(productname));
 		updateOrder(username);
 	}
 

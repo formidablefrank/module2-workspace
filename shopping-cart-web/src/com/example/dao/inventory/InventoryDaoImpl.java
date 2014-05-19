@@ -33,6 +33,9 @@ public class InventoryDaoImpl implements InventoryDao{
 			list.add(category);
 		}
 		inventory = new Inventory(list);
+		rs.close();
+		stmt.close();
+		con.close();
 		return inventory;
 	}
 

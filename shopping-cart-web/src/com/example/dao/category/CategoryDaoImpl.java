@@ -34,7 +34,7 @@ public class CategoryDaoImpl implements CategoryDao {
 			list.put(pro, rs.getInt("fld_inventory_qty"));
 		}
 		category = new Category(list, name);
-		
+		rs.close();
 		stmt.close();
 		con.close();
 		

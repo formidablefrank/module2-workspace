@@ -27,7 +27,7 @@ public class UserDaoImpl implements UserDao {
 		while(rs.next()){
 			user = new User(rs.getString("fld_username"), rs.getString("fld_password"), rs.getString("fld_roletype"));
 		}
-		
+		rs.close();
 		stmt.close();
 		con.close();
 		
@@ -43,6 +43,7 @@ public class UserDaoImpl implements UserDao {
 		int keyUser = 0;
 		if(rs7.next())
 			keyUser = rs7.getInt("key_user");
+		rs7.close();
 		stmt7.close();
 		con.close();
 		return keyUser;
