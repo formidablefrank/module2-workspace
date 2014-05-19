@@ -41,7 +41,7 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
             <li><a href="cust"><i class="fa fa-edit"></i> Shop</a></li>
-            <li class="active"><a href="cart"><i class="fa fa-table"></i> View Cart</a></li>
+            <li class="active"><a href="viewCart"><i class="fa fa-table"></i> View Cart</a></li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right navbar-user">
