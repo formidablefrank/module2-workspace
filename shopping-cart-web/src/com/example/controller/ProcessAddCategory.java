@@ -23,6 +23,7 @@ public class ProcessAddCategory extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,10 +37,8 @@ public class ProcessAddCategory extends HttpServlet {
 				request.setAttribute("successMsg", "Success!");
 			} catch (DaoException e) {
 				request.setAttribute("errorMsg", "Error in database connection. Try again later.");
-				e.printStackTrace();
 			} catch (SQLException e) {
 				request.setAttribute("errorMsg", "Duplicate category name! Please try another.");
-				e.printStackTrace();
 			}
 		}
 		request.getServletContext().getRequestDispatcher("/addCategory").forward(request, response);

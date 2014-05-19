@@ -28,10 +28,8 @@ public class ClearCart extends HttpServlet {
 			request.setAttribute("msgSuccess", "Success!");
 		} catch (SQLException e) {
 			request.setAttribute("errorMsg", "Error in database connection. Try again later.");
-			e.printStackTrace();
 		} catch (DaoException e) {
 			request.setAttribute("errorMsg", "Error in database query. Try again later.");
-			e.printStackTrace();
 		}
 		request.getServletContext().getRequestDispatcher("/viewCart").forward(request, response);
 	}

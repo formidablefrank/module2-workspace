@@ -30,10 +30,8 @@ public class ViewCart extends HttpServlet {
 			request.setAttribute("cart", cart);
 		} catch (SQLException e) {
 			request.setAttribute("errorMsg", "Error in database connection. Try again later.");
-			e.printStackTrace();
 		} catch (DaoException e) {
 			request.setAttribute("errorMsg", "Error in database query. Try again later.");
-			e.printStackTrace();
 		}
 		request.getServletContext().getRequestDispatcher("/WEB-INF/viewCart.jsp").forward(request, response);
 	}

@@ -25,6 +25,7 @@ public class ProcessAddProduct extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -50,13 +51,10 @@ public class ProcessAddProduct extends HttpServlet {
 				request.setAttribute("successMsg", "Success!");
 			} catch (NumberFormatException e) {
 				request.setAttribute("errorMsg", "Invalid argument for price/quantity!");
-				e.printStackTrace();
 			} catch (DaoException e) {
 				request.setAttribute("errorMsg", "Error in database connection. Try again later.");
-				e.printStackTrace();
 			} catch (SQLException e) {
 				request.setAttribute("errorMsg", "Duplicate product name! Try again.");
-				e.printStackTrace();
 			}
 		}
 		request.getServletContext().getRequestDispatcher("/addProduct").forward(request, response);

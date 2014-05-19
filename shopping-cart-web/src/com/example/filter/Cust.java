@@ -40,9 +40,9 @@ public class Cust implements Filter {
 		try {
 			userRole = loginService.getUser(username).getRole();
 		} catch (DaoException e) {
-			e.printStackTrace();
+			request.setAttribute("errorMsg", "Error in database connection. Try again later.");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			request.setAttribute("errorMsg", "Error in database query. Try again later.");
 		}
 		if(userRole != null && !userRole.equals("cust")){
 			HttpServletResponse hsr = (HttpServletResponse) response;

@@ -27,10 +27,8 @@ public class CheckOut extends HttpServlet {
 			cs.checkOutCart((String)request.getSession().getAttribute("username"));
 		} catch (SQLException e) {
 			request.setAttribute("errorMsg", "Error in database connection. Try again later.");
-			e.printStackTrace();
 		} catch (DaoException e) {
 			request.setAttribute("errorMsg", "Error in database query. Try again later.");
-			e.printStackTrace();
 		}
 		response.sendRedirect("cust");
 	}

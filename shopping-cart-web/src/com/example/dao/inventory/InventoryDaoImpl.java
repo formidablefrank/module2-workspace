@@ -47,7 +47,6 @@ public class InventoryDaoImpl implements InventoryDao{
 		stm.setInt(1, quantity);
 		stm.setString(2, productname);
 		int rset = stm.executeUpdate();
-//		System.out.println(rset + " Inventory updated");
 		stm.close();
 		con.close();
 	}

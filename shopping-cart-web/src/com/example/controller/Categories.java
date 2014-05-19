@@ -31,10 +31,8 @@ public class Categories extends HttpServlet {
 			inv = as.viewProducts();
 		} catch (DaoException e) {
 			request.setAttribute("errorMsg", "Error in database connection. Try again later.");
-			e.printStackTrace();
 		} catch (SQLException e) {
 			request.setAttribute("errorMsg", "Error in database query. Try again later.");
-			e.printStackTrace();
 		}
 		if(inv != null){
 			List<String> categoryList = new ArrayList<String>();

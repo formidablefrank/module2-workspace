@@ -23,6 +23,7 @@ public class AddToCart extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -31,13 +32,10 @@ public class AddToCart extends HttpServlet {
 			request.setAttribute("successMsg", "Success!");
 		} catch (NumberFormatException e) {
 			request.setAttribute("errorMsg", "Invalid argument for quantity!");
-			e.printStackTrace();
 		} catch (SQLException e) {
 			request.setAttribute("errorMsg", "Error in database connection. Try again later.");
-			e.printStackTrace();
 		} catch (DaoException e) {
 			request.setAttribute("errorMsg", "Error in database query. Try again later.");
-			e.printStackTrace();
 		}
 		request.getServletContext().getRequestDispatcher("/cust?category=" + request.getParameter("category")).forward(request, response);
 	}

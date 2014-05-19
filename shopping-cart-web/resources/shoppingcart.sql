@@ -29,7 +29,7 @@ CREATE TABLE `tbl_category` (
   `fld_category_name` varchar(45) NOT NULL,
   PRIMARY KEY (`key_category`),
   UNIQUE KEY `fld_category_name_UNIQUE` (`fld_category_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `tbl_category` (
 
 LOCK TABLES `tbl_category` WRITE;
 /*!40000 ALTER TABLE `tbl_category` DISABLE KEYS */;
-INSERT INTO `tbl_category` VALUES (1,'CategoryA'),(2,'CategoryB'),(3,'CategoryC');
+INSERT INTO `tbl_category` VALUES (1,'CategoryA'),(2,'CategoryB'),(3,'CategoryC'),(6,'CategoryF');
 /*!40000 ALTER TABLE `tbl_category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -51,11 +51,10 @@ DROP TABLE IF EXISTS `tbl_order`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbl_order` (
   `key_order` int(11) NOT NULL AUTO_INCREMENT,
-  `key_user` int(11) DEFAULT NULL,
-  `fld_amount` decimal(10,0) DEFAULT NULL,
-  `fld_status` varchar(5) NOT NULL DEFAULT '0',
+  `key_user` int(11) NOT NULL,
+  `fld_amount` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`key_order`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +63,7 @@ CREATE TABLE `tbl_order` (
 
 LOCK TABLES `tbl_order` WRITE;
 /*!40000 ALTER TABLE `tbl_order` DISABLE KEYS */;
-INSERT INTO `tbl_order` VALUES (1,1,180,'new'),(2,2,100,'new');
+INSERT INTO `tbl_order` VALUES (1,1,180.00),(4,3,140.00),(6,2,555.00);
 /*!40000 ALTER TABLE `tbl_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78,14 +77,14 @@ DROP TABLE IF EXISTS `tbl_order_detail`;
 CREATE TABLE `tbl_order_detail` (
   `key_order_detail` int(11) NOT NULL AUTO_INCREMENT,
   `key_order` int(11) NOT NULL,
-  `key_product` int(11) DEFAULT NULL,
-  `fld_quantity` int(11) DEFAULT NULL,
+  `key_product` int(11) NOT NULL,
+  `fld_quantity` int(11) unsigned NOT NULL,
   PRIMARY KEY (`key_order_detail`),
   KEY `fk_tbl_order_detail_tbl_order1_idx` (`key_order`),
   KEY `fk_tbl_order_detail_tbl_product1_idx` (`key_product`),
-  CONSTRAINT `fk_tbl_order_detail_tbl_order1` FOREIGN KEY (`key_order`) REFERENCES `tbl_order` (`key_order`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tbl_order_detail_tbl_product1` FOREIGN KEY (`key_product`) REFERENCES `tbl_product` (`key_product`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  CONSTRAINT `fk_tbl_order_detail_tbl_order1` FOREIGN KEY (`key_order`) REFERENCES `tbl_order` (`key_order`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_tbl_order_detail_tbl_product1` FOREIGN KEY (`key_product`) REFERENCES `tbl_product` (`key_product`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,7 +93,7 @@ CREATE TABLE `tbl_order_detail` (
 
 LOCK TABLES `tbl_order_detail` WRITE;
 /*!40000 ALTER TABLE `tbl_order_detail` DISABLE KEYS */;
-INSERT INTO `tbl_order_detail` VALUES (1,1,3,10),(2,1,2,1),(3,2,6,5);
+INSERT INTO `tbl_order_detail` VALUES (1,1,3,10),(2,1,2,1),(10,4,6,7),(13,6,5,5),(14,6,6,4),(15,6,7,4);
 /*!40000 ALTER TABLE `tbl_order_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,13 +108,14 @@ CREATE TABLE `tbl_product` (
   `key_product` int(11) NOT NULL AUTO_INCREMENT,
   `key_category` int(11) NOT NULL,
   `fld_product_name` varchar(45) NOT NULL,
-  `fld_inventory_qty` int(11) NOT NULL DEFAULT '0',
-  `fld_unit_price` decimal(10,0) NOT NULL,
+  `fld_inventory_qty` int(11) unsigned NOT NULL DEFAULT '0',
+  `fld_unit_price` decimal(10,2) NOT NULL,
   `fld_product_image` varchar(45) NOT NULL,
   PRIMARY KEY (`key_product`),
+  UNIQUE KEY `fld_product_name_UNIQUE` (`fld_product_name`),
   KEY `fk_tbl_product_tbl_category1_idx` (`key_category`),
   CONSTRAINT `fk_tbl_product_tbl_category1` FOREIGN KEY (`key_category`) REFERENCES `tbl_category` (`key_category`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +124,7 @@ CREATE TABLE `tbl_product` (
 
 LOCK TABLES `tbl_product` WRITE;
 /*!40000 ALTER TABLE `tbl_product` DISABLE KEYS */;
-INSERT INTO `tbl_product` VALUES (1,1,'Apple',100,10,'/img/CategoryA/Apple.jpg'),(2,1,'Axe',50,100,'/img/CategoryA/Axe.jpg'),(3,2,'Banana',60,8,'/img/CategoryB/Banana.jpg'),(4,2,'Bat',10,50,'/img/CategoryB/Bat.jpg'),(5,3,'Crop',70,15,'/img/CategoryC/Crop.jpg'),(6,3,'Cutter',20,20,'/img/CategoryC/Cutter.jpg');
+INSERT INTO `tbl_product` VALUES (1,1,'Apple',91,10.00,'img/product.jpg'),(2,1,'Axe',50,100.00,'img/product.jpg'),(3,2,'Banana',56,8.00,'img/product.jpg'),(4,2,'Bat',10,50.00,'img/product.jpg'),(5,3,'Crop',70,15.00,'img/product.jpg'),(6,3,'Cutter',7,20.00,'img/product.jpg'),(7,3,'Fruit Salad',50,100.00,'img/product.jpg'),(8,3,'Fruit ',0,98.75,'img/product.jpg');
 /*!40000 ALTER TABLE `tbl_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -192,4 +192,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-05-14 10:32:04
+-- Dump completed on 2014-05-19 11:17:41

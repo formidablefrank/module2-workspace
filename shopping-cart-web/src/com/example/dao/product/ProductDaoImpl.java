@@ -55,7 +55,6 @@ public class ProductDaoImpl implements ProductDao {
 		stmt2.setBigDecimal(4, pro.getPrice());
 		stmt2.setString(5, pro.getImage());
 		int rs2 = stmt2.executeUpdate();
-//		System.out.println(rs2 + " Product added");
 		stmt2.close();
 		con.close();
 	}
